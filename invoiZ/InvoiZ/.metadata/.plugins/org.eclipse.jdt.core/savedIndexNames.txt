@@ -1,0 +1,8 @@
+INDEX VERSION 1.131+E:\my projects\invoiZ 1.2\InvoiZ\.metadata\.plugins\org.eclipse.jdt.core
+745426966.index
+4088457036.index
+704400496.index
+1671692264.index
+1158862188.index
+3372404224.index
+3554558578.index

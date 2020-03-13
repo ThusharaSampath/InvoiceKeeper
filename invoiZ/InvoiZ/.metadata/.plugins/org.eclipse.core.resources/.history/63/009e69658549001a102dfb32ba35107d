@@ -1,0 +1,518 @@
+package userInterface;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.Connection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+
+import entities.Dealer;
+import manager.chequeManager;
+import manager.dealerManager;
+import manager.invoiceManager;
+import dataSource.DataClass;
+import dataSource.DatabaseConnect;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
+import java.awt.Window.Type;
+import java.awt.Dialog.ModalExclusionType;
+
+import java.util.Properties;
+import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import com.toedter.calendar.JDateChooser;
+
+public class UserInterface {
+
+	private JFrame frmInvoiz;
+	private JTextField Amount;
+	private JTextField InvoiceNo_input;
+	private JTextField txtDealerName;
+	private JTextField txtDealerTel;
+	private JTextField txtperiod_D;
+	private JTextField txtChequeNo_C;
+	private JTextField txtInvoiceNo_C;
+	private JTextField txtCheckAmount_C;
+	private JTextField txtChequeNo_I;
+	private JTextField txt_search_Invoice;
+	private JTextField txt_search_cheque;
+	private JTextField txt_search_dealer;
+	private JTable table;
+
+	// static Connection connection = null;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		// connection =DatabaseConnect.dbConnector();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserInterface window = new UserInterface();
+					window.frmInvoiz.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public UserInterface() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	@SuppressWarnings("unchecked")
+	private void initialize() {
+
+		frmInvoiz = new JFrame();
+		frmInvoiz.setTitle("InvoiZ");
+		frmInvoiz.getContentPane().setEnabled(false);
+		frmInvoiz.setBounds(100, 100, 516, 446);
+		frmInvoiz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frmInvoiz.getContentPane().setLayout(null);
+
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 11, 479, 385);
+		frmInvoiz.getContentPane().add(tabbedPane);
+
+		JPanel panel = new JPanel();
+		panel.setBorder(null);
+		tabbedPane.addTab("Invoice", null, panel, null);
+		panel.setLayout(null);
+
+		Amount = new JTextField();
+		Amount.setBounds(207, 98, 173, 20);
+		panel.add(Amount);
+		Amount.setColumns(10);
+
+		JLabel lblAmount = new JLabel("Amount");
+		lblAmount.setBounds(207, 82, 62, 14);
+		panel.add(lblAmount);
+
+		JComboBox<Object> periodDropdwn = new JComboBox<Object>();
+		periodDropdwn.setBounds(16, 216, 181, 20);
+		panel.add(periodDropdwn);
+		periodDropdwn.addItem(15);
+		periodDropdwn.addItem(20);
+		periodDropdwn.addItem(25);
+		periodDropdwn.addItem(30);
+		periodDropdwn.addItem(35);
+		periodDropdwn.addItem(40);
+		periodDropdwn.addItem(45);
+		periodDropdwn.setSelectedItem(15);
+		// ComboBoxModel<Object> period = periodDropdwn.getModel();
+		// System.out.println(period);
+
+		JLabel lblInvoiceNo = new JLabel("Invoice No.");
+		lblInvoiceNo.setBounds(16, 82, 86, 14);
+		panel.add(lblInvoiceNo);
+
+		InvoiceNo_input = new JTextField();
+		InvoiceNo_input.setBounds(16, 98, 180, 20);
+		panel.add(InvoiceNo_input);
+		InvoiceNo_input.setColumns(10);
+
+		JLabel Date_Label = new JLabel("Today :");
+		Date_Label.setBounds(16, 11, 46, 14);
+		panel.add(Date_Label);
+
+		JLabel Date = new JLabel("New label");
+		Date.setBounds(73, 11, 62, 14);
+		panel.add(Date);
+		Date.setText((timeManager.today()));// 2016/11/16 12:08:43
+
+		JComboBox<Object> DealerDropdwn1 = new JComboBox<Object>();
+		DealerDropdwn1.setBounds(16, 51, 181, 20);
+		panel.add(DealerDropdwn1);
+		DealerDropdwn1.addItem("Janet");
+		DealerDropdwn1.addItem("nature");
+		DealerDropdwn1.setSelectedItem(null);
+		
+		JDateChooser dateChooser_I = new JDateChooser();
+		dateChooser_I.setDateFormatString("yyyy-MM-dd");
+		dateChooser_I.setBounds(16, 249, 181, 20);
+		panel.add(dateChooser_I);
+
+
+		JButton btn_save_I = new JButton("SAVE");
+		btn_save_I.setBounds(10, 300, 225, 35);
+		panel.add(btn_save_I);
+		btn_save_I.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					
+					if (periodDropdwn.isEnabled()) {
+						int period = (int) periodDropdwn.getSelectedItem();
+					} else {
+						int period = (int) periodDropdwn.getSelectedItem();
+					}
+					long amount = Long.parseLong(Amount.getText());
+					//System.out.println("Amount is : " + Long.toString(amount));
+
+					long invoiceNo = Long.parseLong(InvoiceNo_input.getText());
+					//System.out.println("invoice No. is : " + Long.toString(invoiceNo));
+
+					String dealerName = (String) DealerDropdwn1.getSelectedItem();
+
+					long chequeNo = Long.parseLong(txtChequeNo_I.getText());
+					// DealerName.setText(dealerCBox);
+
+					invoiceManager.getInstance().saveInvoice(invoiceNo, amount, timeManager.today(),
+							deadline , dealerName, chequeNo);
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,"There is invalid input, please check!"); 
+				}
+			}
+		});
+
+		JButton btn_rest_I = new JButton("RESET");
+		btn_rest_I.setBounds(240, 300, 225, 35);
+		panel.add(btn_rest_I);
+		btn_rest_I.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Amount.setText("");
+				InvoiceNo_input.setText("");
+
+			}
+
+		});
+		// ComboBoxModel<Object> dealer = DealerDropdwn1.getModel();
+		// System.out.println(dealer);
+
+		JButton btnAddDealer = new JButton("Add Dealer");
+		btnAddDealer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.setSelectedIndex(1);
+			}
+		});
+		btnAddDealer.setBounds(208, 50, 108, 23);
+		panel.add(btnAddDealer);
+
+		JLabel DealerName = new JLabel("Dealer");
+		DealerName.setBounds(16, 36, 46, 14);
+		panel.add(DealerName);
+		// radio button
+		JRadioButton rdobtn1 = new JRadioButton("Default Period");
+		rdobtn1.setBounds(207, 215, 109, 23);
+		panel.add(rdobtn1);
+
+		JRadioButton rdobtn3 = new JRadioButton("Custom Date");
+		rdobtn3.setBounds(207, 246, 109, 23);
+		panel.add(rdobtn3);
+
+		JLabel lblperiod = new JLabel("Period");
+		lblperiod.setBounds(16, 191, 46, 14);
+		panel.add(lblperiod);
+
+		JLabel lblNewLabel_5 = new JLabel("Cheque No.");
+		lblNewLabel_5.setBounds(16, 129, 109, 14);
+		panel.add(lblNewLabel_5);
+
+		txtChequeNo_I = new JTextField();
+		txtChequeNo_I.setBounds(16, 147, 180, 20);
+		panel.add(txtChequeNo_I);
+		txtChequeNo_I.setColumns(10);
+
+		JButton btnAddCheque = new JButton("Add Cheque");
+		btnAddCheque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.setSelectedIndex(2);
+			}
+		});
+		btnAddCheque.setBounds(207, 146, 109, 23);
+		panel.add(btnAddCheque);
+
+		JButton btnInvoiceList = new JButton("Invoice List");
+		btnInvoiceList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.setSelectedIndex(3);
+			}
+		});
+		btnInvoiceList.setBounds(356, 11, 108, 29);
+		panel.add(btnInvoiceList);
+
+		rdobtn1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				periodDropdwn.setEnabled(true);
+				dateChooser_I.setEnabled(false);
+
+			}
+		});
+		rdobtn3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				periodDropdwn.setEnabled(false);
+				dateChooser_I.setEnabled(true);
+
+			}
+		});
+
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Dealer", null, panel_1, "Add new dealer");
+		panel_1.setLayout(null);
+
+		JButton btnDealersList = new JButton("Dealers List");
+		btnDealersList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.setSelectedIndex(4);
+			}
+
+		});
+		btnDealersList.setToolTipText("saved dealers");
+		btnDealersList.setBounds(355, 11, 109, 29);
+		panel_1.add(btnDealersList);
+
+		txtDealerName = new JTextField();
+		txtDealerName.setBounds(20, 43, 281, 20);
+		panel_1.add(txtDealerName);
+		txtDealerName.setColumns(10);
+
+		JLabel lblName = new JLabel(" Name ");
+		lblName.setBounds(20, 18, 46, 14);
+		panel_1.add(lblName);
+
+		txtDealerTel = new JTextField();
+		txtDealerTel.setBounds(20, 99, 281, 20);
+		panel_1.add(txtDealerTel);
+		txtDealerTel.setColumns(10);
+
+		JLabel lblTel = new JLabel(" Tel ");
+		lblTel.setBounds(20, 74, 46, 14);
+		panel_1.add(lblTel);
+
+		txtperiod_D = new JTextField();
+		txtperiod_D.setBounds(20, 155, 281, 20);
+		panel_1.add(txtperiod_D);
+		txtperiod_D.setColumns(10);
+
+		JLabel lblNewLabel = new JLabel("Period ");
+		lblNewLabel.setBounds(20, 130, 100, 14);
+		panel_1.add(lblNewLabel);
+
+		JButton btnSave_D = new JButton("SAVE");
+		btnSave_D.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					String name = txtDealerName.getText();
+					long tel = Long.parseLong(txtDealerTel.getText());
+					int period = Integer.parseInt(txtperiod_D.getText());
+
+					Dealer d = dealerManager.getInstance().createDealer(name, DataClass.NUMBER_OF_DEALERS, tel, period);
+					DataClass.saveDealer(d);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null,"There is invalid input, please check!"); 
+				}
+			}
+		});
+		btnSave_D.setBounds(10, 300, 225, 35);
+		panel_1.add(btnSave_D);
+
+		JButton btnReset_D = new JButton("RESET");
+		btnReset_D.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtDealerName.setText("");
+				txtDealerTel.setText("");
+				txtperiod_D.setText("");
+			}
+		});
+		btnReset_D.setBounds(240, 300, 225, 35);
+		panel_1.add(btnReset_D);
+
+		ButtonGroup G = new ButtonGroup();
+		G.add(rdobtn1);
+		G.add(rdobtn3);
+		rdobtn1.setSelected(true);
+	
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("Cheque", null, panel_3, null);
+		panel_3.setLayout(null);
+
+		JButton btnChequeList = new JButton("Cheque List");
+		btnChequeList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.setSelectedIndex(5);
+			}
+		});
+		btnChequeList.setBounds(356, 11, 108, 29);
+		panel_3.add(btnChequeList);
+
+		JLabel lblCheque = new JLabel("Cheque No.");
+		lblCheque.setBounds(10, 15, 77, 14);
+		panel_3.add(lblCheque);
+
+		txtChequeNo_C = new JTextField();
+		txtChequeNo_C.setBounds(10, 40, 292, 20);
+		panel_3.add(txtChequeNo_C);
+		txtChequeNo_C.setColumns(10);
+
+		JLabel lblNewLabel_1 = new JLabel("Invoice No.");
+		lblNewLabel_1.setBounds(10, 71, 108, 14);
+		panel_3.add(lblNewLabel_1);
+
+		txtInvoiceNo_C = new JTextField();
+		txtInvoiceNo_C.setBounds(10, 96, 292, 20);
+		panel_3.add(txtInvoiceNo_C);
+		txtInvoiceNo_C.setColumns(10);
+
+		JLabel lblNewLabel_2 = new JLabel("DealerName");
+		lblNewLabel_2.setBounds(10, 127, 62, 14);
+		panel_3.add(lblNewLabel_2);
+		
+		JComboBox<Object> DealerDropdwn_C = new JComboBox<Object>();
+		DealerDropdwn_C.setBounds(10, 152, 292, 20);
+		panel_3.add(DealerDropdwn_C);
+		DealerDropdwn_C.addItem("Janet");
+		DealerDropdwn_C.addItem("nature");
+		DealerDropdwn_C.setSelectedItem(null);
+
+		txtCheckAmount_C = new JTextField();
+		txtCheckAmount_C.setBounds(10, 211, 292, 20);
+		panel_3.add(txtCheckAmount_C);
+		txtCheckAmount_C.setColumns(10);
+
+		JLabel lblNewLabel_3 = new JLabel("Check Amount");
+		lblNewLabel_3.setBounds(10, 186, 89, 14);
+		panel_3.add(lblNewLabel_3);
+
+		JLabel lblNewLabel_4 = new JLabel("Check date");
+		lblNewLabel_4.setBounds(10, 242, 89, 14);
+		panel_3.add(lblNewLabel_4);
+		
+		JDateChooser dateChooser_C = new JDateChooser();
+		dateChooser_C.setDateFormatString("yyyy-MM-dd");
+		dateChooser_C.setBounds(10, 267, 292, 20);
+		panel_3.add(dateChooser_C);
+
+
+		JButton btn_Save_C = new JButton("SAVE");
+		btn_Save_C.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// txtChequeNo_C,txtInvoiceNo_C,txtDealerName_C,txtCheckAmount_C,txtIssueDate_C,dateChooser_C
+				try {
+				long ChequeNo_C = Long.parseLong(txtChequeNo_C.getText());
+				long InvoiceNo_C = Long.parseLong(txtInvoiceNo_C.getText());					
+				long CheckAmount_C = Long.parseLong(txtCheckAmount_C.getText());
+				String DealerName_C = (String) DealerDropdwn_C.getSelectedItem();
+				String IssueDate_C = ((JTextField)dateChooser_C.getDateEditor().getUiComponent()).getText(); // TODO fix date chooser
+		
+				chequeManager.saveCheque(ChequeNo_C, DealerName_C, InvoiceNo_C,CheckAmount_C, IssueDate_C);
+				//(long chequeNo,String DealerName,long InvoiceNo,long chequeAmount, String chequeDate)
+				}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(null,"There is/are invalid input, please check!"); 
+				}
+				
+			}
+		});
+		btn_Save_C.setBounds(10, 300, 225, 35);
+		panel_3.add(btn_Save_C);
+
+		JButton btnReset_C = new JButton("RESET");
+		btnReset_C.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtChequeNo_C.setText("");
+				txtInvoiceNo_C.setText("");
+				txtCheckAmount_C.setText("");
+			}
+			
+		});
+		btnReset_C.setBounds(240, 300, 225, 35);
+		panel_3.add(btnReset_C);
+
+		
+		JPanel panel_4 = new JPanel();
+		tabbedPane.addTab("Search Invoices", null, panel_4, null);
+		panel_4.setLayout(null);
+
+		JLabel lblNewLabel_6 = new JLabel("Search by Invoice No.");
+		lblNewLabel_6.setBounds(10, 11, 135, 15);
+		panel_4.add(lblNewLabel_6);
+
+		txt_search_Invoice = new JTextField();
+		txt_search_Invoice.setBounds(10, 35, 215, 20);
+		panel_4.add(txt_search_Invoice);
+		txt_search_Invoice.setColumns(10);
+
+		JButton btn_search_invoice = new JButton("Search");
+		btn_search_invoice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btn_search_invoice.setBounds(240, 35, 90, 20);
+		panel_4.add(btn_search_invoice);
+
+		table = new JTable();
+		table.setCellSelectionEnabled(true);
+		table.setColumnSelectionAllowed(true);
+		table.setBounds(10, 112, 455, 220);
+		panel_4.add(table);
+
+		JPanel panel_5 = new JPanel();
+		tabbedPane.addTab("Search Dealers", null, panel_5, null);
+		panel_5.setLayout(null);
+
+		JLabel lblNewLabel_8 = new JLabel("Search Dealer by Name");
+		lblNewLabel_8.setBounds(10, 11, 135, 15);
+		panel_5.add(lblNewLabel_8);
+
+		txt_search_dealer = new JTextField();
+		txt_search_dealer.setBounds(10, 35, 215, 20);
+		panel_5.add(txt_search_dealer);
+		txt_search_dealer.setColumns(10);
+
+		JButton btn_search_dealer = new JButton("Search");
+		btn_search_dealer.setBounds(240, 35, 90, 20);
+		panel_5.add(btn_search_dealer);
+
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("Search Cheques", null, panel_2, null);
+		panel_2.setLayout(null);
+
+		JLabel lblNewLabel_7 = new JLabel("Search Cheque by No.");
+		lblNewLabel_7.setBounds(10, 11, 135, 15);
+		panel_2.add(lblNewLabel_7);
+
+		txt_search_cheque = new JTextField();
+		txt_search_cheque.setBounds(10, 35, 215, 20);
+		panel_2.add(txt_search_cheque);
+		txt_search_cheque.setColumns(10);
+
+		JButton btn_search_cheque = new JButton("Search");
+		btn_search_cheque.setBounds(240, 35, 90, 20);
+		panel_2.add(btn_search_cheque);
+
+	}
+}

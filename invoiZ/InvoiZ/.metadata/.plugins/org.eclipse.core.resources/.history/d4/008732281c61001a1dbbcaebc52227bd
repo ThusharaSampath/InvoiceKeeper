@@ -1,0 +1,133 @@
+package dataSource;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+public class DataDelete {
+	
+	public static void invoiceDelete(String DealerName , String InvoiceNo) {
+	Connection connection = null;
+	connection = DatabaseConnect.dbConnector();
+	Statement stmt = null;
+	
+   
+    try {
+		stmt = connection.createStatement();
+		String query1 = "DELETE FROM  invoice WHERE `InvoiceNo`='"+InvoiceNo+"' AND `DealerName`='"+DealerName+"'";
+		stmt.executeUpdate(query1);
+		JOptionPane.showMessageDialog(null,"Invoice is deleted successfully");
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		JOptionPane.showMessageDialog(null,"Something went wrong while deleting Invoice!");	
+		e.printStackTrace();
+	}finally {
+		try {
+			if (stmt != null) {
+				stmt.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+			;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+public static void DealerDelete(String dealer) {
+	Connection connection = null;
+	connection = DatabaseConnect.dbConnector();
+	Statement stmt = null;
+	
+	 try {
+			stmt = connection.createStatement();
+			String query1 = "DELETE FROM  dealer WHERE `DealerName`='"+dealer+"'";
+			stmt.executeUpdate(query1);
+			JOptionPane.showMessageDialog(null,"Dealer is deleted successfully");
+			} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Something went wrong while deleting Dealer!");	
+			e.printStackTrace();
+		}finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (connection != null) {
+					connection.close();
+				}
+				;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+}
+
+public static void ChequeDelete(String cheque) {
+	Connection connection = null;
+	connection = DatabaseConnect.dbConnector();
+	Statement stmt = null;
+	
+	 try {
+			stmt = connection.createStatement();
+			String query1 = "DELETE FROM  cheque WHERE `ChequeNo`='"+cheque+"'";
+			stmt.executeUpdate(query1);
+			JOptionPane.showMessageDialog(null,"Cheque is deleted successfully");
+			} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Something went wrong while deleting Cheque!");	
+			e.printStackTrace();
+		}finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (connection != null) {
+					connection.close();
+				}
+				;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+}public static void RemoveInvoicesFromCheque(String chequeNos) {
+	Connection connection = null;
+	connection = DatabaseConnect.dbConnector();
+	Statement stmt = null;
+	
+	 try {
+			stmt = connection.createStatement();
+			String query1 = "DELETE FROM  cheque WHERE `ChequeNo`='"+cheque+"'";
+			stmt.executeUpdate(query1);
+			JOptionPane.showMessageDialog(null,"Cheque is deleted successfully");
+			} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Something went wrong while deleting Cheque!");	
+			e.printStackTrace();
+		}finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (connection != null) {
+					connection.close();
+				}
+				;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+}		
+
+}
+

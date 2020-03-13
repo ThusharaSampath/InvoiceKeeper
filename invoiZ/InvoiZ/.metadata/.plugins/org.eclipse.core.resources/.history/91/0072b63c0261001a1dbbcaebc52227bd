@@ -1,0 +1,33 @@
+package utilities;
+
+
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class utils {
+	
+	public static  Map<String, List<Object>> resultSetToArrayList(ResultSet rs) throws SQLException {
+	    ResultSetMetaData md = rs.getMetaData();
+	    int columns = md.getColumnCount();
+	    Map<String, List<Object>> map = new HashMap<>(columns);
+	    System.out.println("yes"+rs.next());
+	    for (int i = 1; i <= columns; ++i) {
+	        map.put(md.getColumnName(i), new ArrayList<>());
+	        
+	    }
+	    while (rs.next()) {
+	        for (int i = 1; i <= columns; ++i) {
+	        	
+	            map.get(md.getColumnName(i)).add(rs.getObject(i));
+	        }
+	    }
+
+	    return map;
+	}
+
+}
