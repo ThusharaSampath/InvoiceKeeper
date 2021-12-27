@@ -5,9 +5,9 @@
 
 ![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/81da37050bd1b49461e33616bcbd68796db6e0fe/Screenshots/image1.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image2.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/394ccefa8fb93f3a004ec604904ece460c3b77a4/Screenshots/image2.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image3.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/394ccefa8fb93f3a004ec604904ece460c3b77a4/Screenshots/image3.jpg)
 
 ![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image4.jpg)
 
