@@ -3,4 +3,4 @@
 
  # Screenshots
 
- ![alt text](https://github.com/thusharasampath/invoicekeeper/blob/master/screenshots/image1.jpg?raw=true)
+ ![alt text](https://github.com/thusharasampath/invoicekeeper/blob/master/image1.jpg?raw=true)
