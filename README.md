@@ -9,14 +9,14 @@
 
 ![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/394ccefa8fb93f3a004ec604904ece460c3b77a4/Screenshots/image3.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image4.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/8a2bc39aaa56105911414cf19d81d5f03c5cd44f/Screenshots/image4.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image5.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/8a2bc39aaa56105911414cf19d81d5f03c5cd44f/Screenshots/image5.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image6.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/8a2bc39aaa56105911414cf19d81d5f03c5cd44f/Screenshots/image6.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image7.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/8a2bc39aaa56105911414cf19d81d5f03c5cd44f/Screenshots/image7.jpg)
 
-![alt text](https://github.dev/ThusharaSampath/InvoiceKeeper/blob/d9febe4aec20b3a71f6530506d850e12ff3e036b/Screenshots/image8.jpg)
+![alt text](https://github.com/ThusharaSampath/InvoiceKeeper/blob/8a2bc39aaa56105911414cf19d81d5f03c5cd44f/Screenshots/image8.jpg)
 
 
